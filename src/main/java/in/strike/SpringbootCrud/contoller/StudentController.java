@@ -9,20 +9,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.strike.SpringbootCrud.entity.Student;
+import in.strike.SpringbootCrud.service.StudentService;
 
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
 
+    private StudentService studentService;
+
     @PostMapping("/create")
-    public void createStudent(@RequestBody Student student){
+    public Student createStudent(@RequestBody Student student){
 
-        System.out.println("Student created");
-        System.out.println(student.getName());
-        System.out.println(student.getAge());
-        System.out.println(student.getRoll());
-        System.out.println(student.getSubject());
-
+        // System.out.println();
+        System.out.println("inside studentController");
+        Student newStudent= studentService.createStudent(student);
+        System.out.println("exit studentController");
+        return newStudent;
     }
 
 
