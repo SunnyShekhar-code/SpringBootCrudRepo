@@ -7,8 +7,12 @@ import in.strike.SpringbootCrud.repository.StudentRepo;
 
 @Component
 public class StudentService {
+     private StudentRepo studentRepo;
+    public StudentService(StudentRepo studentRepo){
+        this.studentRepo=studentRepo;
+    }
 
-    private StudentRepo studentRepo;
+   
 
     public Student createStudent(Student student){
         System.out.println("inside studentService");

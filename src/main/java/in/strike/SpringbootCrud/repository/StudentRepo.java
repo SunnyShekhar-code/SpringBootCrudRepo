@@ -1,7 +1,10 @@
 package in.strike.SpringbootCrud.repository;
 
+import org.springframework.stereotype.Component;
+
 import in.strike.SpringbootCrud.entity.Student;
 
+@Component
 public class StudentRepo {
 
     public Student registerStudent(Student student){

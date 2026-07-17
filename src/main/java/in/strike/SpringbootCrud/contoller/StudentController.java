@@ -1,5 +1,8 @@
 package in.strike.SpringbootCrud.contoller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,14 +20,18 @@ public class StudentController {
 
     private StudentService studentService;
 
+    public StudentController(StudentService studentService){
+        this.studentService=studentService;
+    }
+
     @PostMapping("/create")
-    public Student createStudent(@RequestBody Student student){
+    public ResponseEntity<Student> createStudent(@RequestBody Student student){
 
         // System.out.println();
         System.out.println("inside studentController");
         Student newStudent= studentService.createStudent(student);
         System.out.println("exit studentController");
-        return newStudent;
+        return ResponseEntity.status(HttpStatus.CREATED).body(newStudent);
     }
 
 
