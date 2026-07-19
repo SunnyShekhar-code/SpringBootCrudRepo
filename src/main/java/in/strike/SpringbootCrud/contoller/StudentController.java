@@ -68,6 +68,7 @@ public class StudentController {
         
     }
 
+    //delete api
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> deleteStudent(@PathVariable Long id){
 
