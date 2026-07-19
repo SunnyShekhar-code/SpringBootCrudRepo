@@ -47,6 +47,7 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    // get app
     @GetMapping("/getall")
     public ResponseEntity<List<Student>> getAllStudent(){
         List<Student> response= studentService.getAllStudent();
