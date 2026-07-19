@@ -38,14 +38,13 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newStudent);
     }
 
-
+    // get api
     @GetMapping("/get/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable Long id){
         Student response= studentService.getStudent(id);
         if(response==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
-        
     }
 
     @GetMapping("/getall")
