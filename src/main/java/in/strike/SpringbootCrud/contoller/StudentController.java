@@ -56,6 +56,7 @@ public class StudentController {
 
     }
 
+    //update api
     @PutMapping("/update/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student reqStudent){
         // System.out.println("update api");
