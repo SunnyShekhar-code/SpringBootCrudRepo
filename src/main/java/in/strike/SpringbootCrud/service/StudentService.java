@@ -25,28 +25,28 @@ public class StudentService {
 
     public Student getStudent(Long id){
 
-        Optional<Student> response= studentRepo.findById(id);
+        Optional<Student> response= studentRepo.findByIdAndDeletedIsFalse(id);
       
         if(response.isEmpty()) return null;
 
         Student responseStudent = response.get();
-        if(responseStudent.isDeleted()) return null;
+        // if(responseStudent.isDeleted()) return null;
         return responseStudent;
     }
 
     public List<Student> getAllStudent(){
-        List<Student> studentlist=studentRepo.findAll();
-        List<Student> responselist= new ArrayList<>();
-        for(Student student:studentlist){
-            if(!student.isDeleted()) responselist.add(student);
-        }
-        return responselist;
+        List<Student> studentlist=studentRepo.findAllAndDeletedIsFalse();
+        // List<Student> responselist= new ArrayList<>();
+        // for(Student student:studentlist){
+        //     if(!student.isDeleted()) responselist.add(student);
+        // }
+        return studentlist;
     }
 
     public Student updateStudent(long id, Student reqStudent){
 
         Student existingStudent=getStudent(id);
-        if(existingStudent==null || existingStudent.isDeleted()) return null;
+        if(existingStudent==null) return null;
 
         existingStudent.setAge(reqStudent.getAge());
         existingStudent.setName(reqStudent.getName());
@@ -60,11 +60,12 @@ public class StudentService {
 
     public boolean deleteStudent(long id){
 
-        // boolean response=studentRepo.existsById(id);
-        Student student=getStudent(id); 
+        boolean response=studentRepo.existsByIdAndDeletedIsFalse(id);
+        if(!response) return false;
 
-        // if(!response) return false;
-        if(student==null || student.isDeleted()) return false;
+
+        // Student student=getStudent(id); 
+        // if(student==null || student.isDeleted()) return false;
 
         studentRepo.deleteById(id);
         return true;
@@ -72,7 +73,7 @@ public class StudentService {
 
     public boolean softDeleteStudent(long id){
         Student existingStudent= getStudent(id);
-        if(existingStudent==null || existingStudent.isDeleted()) return false;
+        if(existingStudent==null) return false;
 
         existingStudent.setDeleted(true);
         studentRepo.save(existingStudent);
