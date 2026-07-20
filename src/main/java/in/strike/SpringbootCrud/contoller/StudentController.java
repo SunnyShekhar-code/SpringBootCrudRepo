@@ -68,7 +68,7 @@ public class StudentController {
     }
 
 
-    // soft delete
+    // hard delete
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> softDeleteStudent(@PathVariable Long id){
         boolean response= studentService.softDeleteStudent(id);
@@ -77,7 +77,7 @@ public class StudentController {
 
     }
 
-    //delete api
+    //soft delete api
     @PatchMapping("/delete-soft/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id){
 

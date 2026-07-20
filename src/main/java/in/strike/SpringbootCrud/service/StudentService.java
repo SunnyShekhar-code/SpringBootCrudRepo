@@ -30,7 +30,7 @@ public class StudentService {
         if(response.isEmpty()) return null;
 
         Student responseStudent = response.get();
-        if(!responseStudent.isDeleted()) return null;
+        if(responseStudent.isDeleted()) return null;
         return responseStudent;
     }
 
@@ -38,7 +38,7 @@ public class StudentService {
         List<Student> studentlist=studentRepo.findAll();
         List<Student> responselist= new ArrayList<>();
         for(Student student:studentlist){
-            if(student.isDeleted()) responselist.add(student);
+            if(!student.isDeleted()) responselist.add(student);
         }
         return responselist;
     }
@@ -46,7 +46,7 @@ public class StudentService {
     public Student updateStudent(long id, Student reqStudent){
 
         Student existingStudent=getStudent(id);
-        if(existingStudent==null || !existingStudent.isDeleted()) return null;
+        if(existingStudent==null || existingStudent.isDeleted()) return null;
 
         existingStudent.setAge(reqStudent.getAge());
         existingStudent.setName(reqStudent.getName());
@@ -64,7 +64,7 @@ public class StudentService {
         Student student=getStudent(id); 
 
         // if(!response) return false;
-        if(student==null || !student.isDeleted()) return false;
+        if(student==null || student.isDeleted()) return false;
 
         studentRepo.deleteById(id);
         return true;
@@ -72,7 +72,7 @@ public class StudentService {
 
     public boolean softDeleteStudent(long id){
         Student existingStudent= getStudent(id);
-        if(existingStudent==null || !existingStudent.isDeleted()) return false;
+        if(existingStudent==null || existingStudent.isDeleted()) return false;
 
         existingStudent.setDeleted(true);
         studentRepo.save(existingStudent);
