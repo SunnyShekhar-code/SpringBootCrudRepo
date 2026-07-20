@@ -1,19 +1,33 @@
 package in.strike.SpringbootCrud.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private int age;
     private int roll;
     private String subject;
+    private boolean deleted;
+    
     public String getName() {
         return name;
     }
+    
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -38,7 +52,7 @@ public class Student {
     public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -1,9 +1,8 @@
 package in.strike.SpringbootCrud.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import in.strike.SpringbootCrud.entity.Student;
@@ -19,7 +18,7 @@ public class StudentService {
    
 
     public Student createStudent(Student reqstudent){
-       
+        reqstudent.setDeleted(false);
         Student newStudent=studentRepo.save(reqstudent);
         return newStudent;
     }
@@ -27,23 +26,27 @@ public class StudentService {
     public Student getStudent(Long id){
 
         Optional<Student> response= studentRepo.findById(id);
-        // Optional<Student> response= StudentRepo.getReferenceById(id);
-        // Student response= StudentRepo.getReferenceById(id);
+      
         if(response.isEmpty()) return null;
 
-        Student responseStudent=response.get();
+        Student responseStudent = response.get();
+        if(!responseStudent.isDeleted()) return null;
         return responseStudent;
     }
 
     public List<Student> getAllStudent(){
         List<Student> studentlist=studentRepo.findAll();
-        return studentlist;
+        List<Student> responselist= new ArrayList<>();
+        for(Student student:studentlist){
+            if(student.isDeleted()) responselist.add(student);
+        }
+        return responselist;
     }
 
     public Student updateStudent(long id, Student reqStudent){
 
         Student existingStudent=getStudent(id);
-        if(existingStudent==null) return null;
+        if(existingStudent==null || !existingStudent.isDeleted()) return null;
 
         existingStudent.setAge(reqStudent.getAge());
         existingStudent.setName(reqStudent.getName());
@@ -62,6 +65,15 @@ public class StudentService {
         if(!response) return false;
 
         studentRepo.deleteById(id);
+        return true;
+    }
+
+    public boolean softDeleteStudent(long id){
+        Student existingStudent= getStudent(id);
+        if(existingStudent==null || !existingStudent.isDeleted()) return false;
+
+        existingStudent.setDeleted(true);
+        studentRepo.save(existingStudent);
         return true;
     }
 
