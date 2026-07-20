@@ -70,11 +70,11 @@ public class StudentController {
 
     //delete api
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> deleteStudent(@PathVariable Long id){
+    public ResponseEntity<String> deleteStudent(@PathVariable Long id){
 
         boolean response= studentService.deleteStudent(id);
-        if(!response) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        if(!response) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("student not found");
+        return ResponseEntity.status(HttpStatus.OK).body("Student deleted");
         
     }
 
