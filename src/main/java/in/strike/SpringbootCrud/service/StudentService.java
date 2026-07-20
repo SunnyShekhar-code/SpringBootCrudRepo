@@ -60,9 +60,11 @@ public class StudentService {
 
     public boolean deleteStudent(long id){
 
-        boolean response=studentRepo.existsById(id);
+        // boolean response=studentRepo.existsById(id);
+        Student student=getStudent(id); 
 
-        if(!response) return false;
+        // if(!response) return false;
+        if(student==null || !student.isDeleted()) return false;
 
         studentRepo.deleteById(id);
         return true;
