@@ -10,8 +10,12 @@ import in.strike.SpringbootCrud.entity.Student;
 public interface StudentRepo extends JpaRepository<Student,Long> {
 
     Optional<Student> findByIdAndDeletedIsFalse(long id);
-    List<Student> findAllAndDeletedIsFalse();
+    List<Student> findByDeletedIsFalse();
     boolean existsByIdAndDeletedIsFalse(long id);
+
+
+
+    // findBy + fieldName + condition
 
    
     

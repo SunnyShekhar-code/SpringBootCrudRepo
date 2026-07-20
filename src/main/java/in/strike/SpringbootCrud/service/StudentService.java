@@ -35,12 +35,15 @@ public class StudentService {
     }
 
     public List<Student> getAllStudent(){
-        List<Student> studentlist=studentRepo.findAllAndDeletedIsFalse();
+        List<Student> studentlist=studentRepo.findByDeletedIsFalse();
+        return studentlist;
+        
+        // List<Student> studentlist=studentRepo.findAll();
         // List<Student> responselist= new ArrayList<>();
         // for(Student student:studentlist){
         //     if(!student.isDeleted()) responselist.add(student);
         // }
-        return studentlist;
+        // return responselist;
     }
 
     public Student updateStudent(long id, Student reqStudent){
